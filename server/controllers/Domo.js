@@ -15,7 +15,7 @@ const makerPage = (req, res) => {
 
 const makeDomo = (req, res) => {
   if (!req.body.name || !req.body.level) {
-    return res.status(400).json({ error: 'Name and level are required. >:)' });
+    return res.status(400).json({ error: 'Name and level are required.' });
   }
 
   const domoData = {
