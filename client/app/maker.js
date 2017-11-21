@@ -1,7 +1,7 @@
 const handleDomo = (e) => {
   e.preventDefault();
   
-  $("#domoMessage").animate({width:'hide'}, 950);
+  $("#domoMessage").animate({width:'hide'}, 450);
   
   if($("#domoName").val() == '' || $("#domoLevel").val() == ''){
     handleError("Name and Level are required");
