@@ -1,10 +1,10 @@
 const handleDomo = (e) => {
   e.preventDefault();
   
-  $("#domoMessage").animate({width:'hide'}, 350);
+  $("#domoMessage").animate({width:'hide'}, 950);
   
-  if($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoLevel").val() == ''){
-    handleError("RAWR! All fields are required");
+  if($("#domoName").val() == '' || $("#domoLevel").val() == ''){
+    handleError("Name and Level are required");
     return false;
   }
   
@@ -25,13 +25,12 @@ const DomoForm = (props) => {
       method="POST"
       className="domoForm"
      >
-    
       <label htmlFor="name">Name: </label>
-      <input id="domoName" type="text" name="name" placeholder="Domo Name"/>
-      <label htmlFor="age"> Age: </label>
-      <input id="domoAge" type= "text" name="age" placeholder="Domo Age"/>
+      <input id="domoName" type="text" name="name" placeholder="Name"/>
       <label htmlFor="level"> Level: </label>
-      <input id="domoLevel" type= "text" name="level" placeholder="Domo Level"/>
+      <input id="domoLevel" type= "number" name="level" placeholder="Level"/>
+      <label htmlFor="weapon"> Weapon: </label>
+      <input id="domoWeapon" type= "text" name="weapon" placeholder="Weapon"/>
       <input type="hidden" name="_csrf" value={props.csrf}/>
       <input className="makeDomoSubmit" type="submit" value="Make Domo" />
     </form>
@@ -42,7 +41,7 @@ const DomoList = function(props){
   if(props.domos.length === 0){
     return(
       <div className= "domoList">
-      <h3 className="emptyDomo">No Domos yet</h3>
+      <h3 className="emptyDomo">No units yet</h3>
       </div>
     );
   }
@@ -50,14 +49,14 @@ const DomoList = function(props){
   let domoText = '';
   const domoNodes = props.domos.map(function(domo){
     
-    domoText += `Name: ${domo.name} Age: ${domo.age} Level: ${domo.level} \n`;
+    domoText += `Name: ${domo.name} Level: ${domo.level} Weapon: ${domo.weapon} \n`;
     
     return(
     <div key={domo._id} className="domo">
       <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
         <h3 className="domoName"> Name: {domo.name}</h3>
-        <h3 className="domoAge"> Age: {domo.age}</h3>
         <h3 className="domoLevel"> Level: {domo.level}</h3>
+        <h3 className="domoWeapon"> Weapon: {domo.weapon}</h3>
         <input className="domoDelete" type="submit" value="Delete"/>
     </div>
     );

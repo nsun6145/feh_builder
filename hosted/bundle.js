@@ -3,10 +3,10 @@
 var handleDomo = function handleDomo(e) {
   e.preventDefault();
 
-  $("#domoMessage").animate({ width: 'hide' }, 350);
+  $("#domoMessage").animate({ width: 'hide' }, 950);
 
-  if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoLevel").val() == '') {
-    handleError("RAWR! All fields are required");
+  if ($("#domoName").val() == '' || $("#domoLevel").val() == '') {
+    handleError("Name and Level are required");
     return false;
   }
 
@@ -32,19 +32,19 @@ var DomoForm = function DomoForm(props) {
       { htmlFor: "name" },
       "Name: "
     ),
-    React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
-    React.createElement(
-      "label",
-      { htmlFor: "age" },
-      " Age: "
-    ),
-    React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
+    React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Name" }),
     React.createElement(
       "label",
       { htmlFor: "level" },
       " Level: "
     ),
-    React.createElement("input", { id: "domoLevel", type: "text", name: "level", placeholder: "Domo Level" }),
+    React.createElement("input", { id: "domoLevel", type: "number", name: "level", placeholder: "Level" }),
+    React.createElement(
+      "label",
+      { htmlFor: "weapon" },
+      " Weapon: "
+    ),
+    React.createElement("input", { id: "domoWeapon", type: "text", name: "weapon", placeholder: "Weapon" }),
     React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
     React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
   );
@@ -58,16 +58,15 @@ var DomoList = function DomoList(props) {
       React.createElement(
         "h3",
         { className: "emptyDomo" },
-        "No Domos yet"
+        "No units yet"
       )
     );
   }
 
   var domoText = '';
-  var domoDummy = void 0;
   var domoNodes = props.domos.map(function (domo) {
-    domoDummy = domo;
-    domoText += "Name: " + domo.name + " Age: " + domo.age + " Level: " + domo.level + " \n";
+
+    domoText += "Name: " + domo.name + " Level: " + domo.level + " Weapon: " + domo.weapon + " \n";
 
     return React.createElement(
       "div",
@@ -81,21 +80,19 @@ var DomoList = function DomoList(props) {
       ),
       React.createElement(
         "h3",
-        { className: "domoAge" },
-        " Age: ",
-        domo.age
-      ),
-      React.createElement(
-        "h3",
         { className: "domoLevel" },
         " Level: ",
         domo.level
       ),
+      React.createElement(
+        "h3",
+        { className: "domoWeapon" },
+        " Weapon: ",
+        domo.weapon
+      ),
       React.createElement("input", { className: "domoDelete", type: "submit", value: "Delete" })
     );
   });
-
-  console.log(domoText);
 
   return React.createElement(
     "div",
@@ -107,11 +104,6 @@ var DomoList = function DomoList(props) {
       domoText
     )
   );
-
-  if (document && document.getElementById('export')) {
-    console.log("check");
-    document.getElementById('export').innerHTML += "Name: " + domo.name + " \n        Age: " + domo.age + " \n        Level: " + domo.level + " \n";
-  }
 };
 
 var loadDomosFromServer = function loadDomosFromServer() {
@@ -140,11 +132,11 @@ $(document).ready(function () {
 
 var handleError = function handleError(message) {
   $("#errorMessage").text(message);
-  $("#domoMessage").animate({ width: 'toggle' }, 350);
+  $("#domoMessage").animate({ width: 'toggle' }, 550);
 };
 
 var redirect = function redirect(response) {
-  $("#domoMessage").animate({ width: 'hide' }, 350);
+  $("#domoMessage").animate({ width: 'hide' }, 550);
   window.location = response.redirect;
 };
 

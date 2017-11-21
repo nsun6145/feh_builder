@@ -46,17 +46,51 @@ const DomoSchema = new mongoose.Schema({
     set: setName,
   },
 
-  age: {
-    type: Number,
-    min: 0,
-    required: true,
-  },
-
   level: {
     type: Number,
     min: 0,
     max: 40,
     required: true,
+  },
+
+  weapon: {
+    type: String,
+    required: false,
+    trim: true,
+
+  },
+
+  assist: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+
+  special: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+
+  skillA: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  skillB: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  skillC: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  seal: {
+    type: String,
+    required: false,
+    trim: true,
   },
 
   owner: {
@@ -73,8 +107,8 @@ const DomoSchema = new mongoose.Schema({
 
 DomoSchema.statics.toAPI = doc => ({
   name: doc.name,
-  age: doc.age,
   level: doc.level,
+  weapon: doc.weapon,
 });
 
 DomoSchema.statics.findByOwner = (ownerId, callback) => {
@@ -82,7 +116,7 @@ DomoSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return DomoModel.find(search).select('name age level').exec(callback);
+  return DomoModel.find(search).select('name level weapon').exec(callback);
 };
 
 DomoModel = mongoose.model('Domo', DomoSchema);
