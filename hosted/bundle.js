@@ -18,6 +18,7 @@ var handleDomo = function handleDomo(e) {
 };
 
 var DomoForm = function DomoForm(props) {
+
   return React.createElement(
     "form",
     { id: "domoForm",
@@ -32,7 +33,15 @@ var DomoForm = function DomoForm(props) {
       { htmlFor: "name" },
       "Name: "
     ),
-    React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Name" }),
+    React.createElement(
+      "select",
+      { id: "domoName", name: "name", placeholder: "Name" },
+      React.createElement(
+        "option",
+        { value: "Abel" },
+        "Abel"
+      )
+    ),
     React.createElement(
       "label",
       { htmlFor: "level" },
@@ -45,8 +54,44 @@ var DomoForm = function DomoForm(props) {
       " Weapon: "
     ),
     React.createElement("input", { id: "domoWeapon", type: "text", name: "weapon", placeholder: "Weapon" }),
+    React.createElement(
+      "label",
+      { htmlFor: "assist" },
+      " Assist: "
+    ),
+    React.createElement("select", { id: "unitAssist", name: "assist", placeholder: "Assist" }),
+    React.createElement(
+      "label",
+      { htmlFor: "special" },
+      " Special: "
+    ),
+    React.createElement("select", { id: "unitSpecial", name: "special", placeholder: "Special" }),
+    React.createElement(
+      "label",
+      { htmlFor: "skillA" },
+      " A Skill: "
+    ),
+    React.createElement("select", { id: "unitSkillA", name: "skillA", placeholder: "A Skill" }),
+    React.createElement(
+      "label",
+      { htmlFor: "skillB" },
+      " B Skill: "
+    ),
+    React.createElement("select", { id: "unitSkillB", name: "skillB", placeholder: "B Skill" }),
+    React.createElement(
+      "label",
+      { htmlFor: "skillC" },
+      " C Skill: "
+    ),
+    React.createElement("select", { id: "unitSkillC", name: "skillC", placeholder: "C Skill" }),
+    React.createElement(
+      "label",
+      { htmlFor: "seal" },
+      " Seal: "
+    ),
+    React.createElement("select", { id: "unitSeal", name: "seal", placeholder: "Seal" }),
     React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-    React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+    React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Create Unit" })
   );
 };
 
@@ -89,6 +134,42 @@ var DomoList = function DomoList(props) {
         { className: "domoWeapon" },
         " Weapon: ",
         domo.weapon
+      ),
+      React.createElement(
+        "h3",
+        { className: "unitAssist" },
+        "Assist: ",
+        domo.assist
+      ),
+      React.createElement(
+        "h3",
+        { className: "unitSpecial" },
+        "Special: ",
+        domo.special
+      ),
+      React.createElement(
+        "h3",
+        { className: "unitSkillA" },
+        "A Skill: ",
+        domo.skillA
+      ),
+      React.createElement(
+        "h3",
+        { className: "unitSkillB" },
+        "B Skill: ",
+        domo.skillB
+      ),
+      React.createElement(
+        "h3",
+        { className: "unitSkillC" },
+        "C Skill: ",
+        domo.skillC
+      ),
+      React.createElement(
+        "h3",
+        { className: "unitSeal" },
+        "Seal: ",
+        domo.seal
       ),
       React.createElement("input", { className: "domoDelete", type: "submit", value: "Delete" })
     );

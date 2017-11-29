@@ -2,6 +2,10 @@ const models = require('../models');
 
 const Account = models.Account;
 
+const errorPage = (req, res) => {
+  res.render('notfound');
+};
+
 const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
@@ -47,11 +51,11 @@ const signup = (request, response) => {
   req.body.pass2 = `${req.body.pass2}`;
 
   if (!req.body.username || !req.body.pass || !req.body.pass2) {
-    return res.status(400).json({ error: 'ALL FIELDS REQUIRED' });
+    return res.status(400).json({ error: 'All fields required buddy.' });
   }
 
   if (req.body.pass !== req.body.pass2) {
-    return res.status(400).json({ error: 'PASSWORDS DO NOT MATCH' });
+    return res.status(400).json({ error: 'Password\'s don\'t match' });
   }
 
   return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
@@ -77,7 +81,7 @@ const signup = (request, response) => {
         return res.status(400).json({ error: 'Username already in use.' });
       }
 
-      return res.status(400).json({ error: 'An error occured' });
+      return res.status(400).json({ error: 'Somethin\' happened' });
     });
   });
 };
@@ -92,6 +96,7 @@ const getToken = (request, response) => {
   res.json(csrfJSON);
 };
 
+module.exports.errorPage = errorPage;
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;

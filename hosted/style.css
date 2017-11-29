@@ -4,6 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background-color:#3a3a34;
 }
 
 #logo {
@@ -16,8 +17,9 @@ html, body {
 
 nav {
     width: 100%;
-    height: 50px;
-    background-color: #55acee;
+    height: 150px;
+    background-color:#3a3a34;
+    border: 3px solid #d5db2e; 
 }
 
 nav:nth-child(1) {
@@ -48,13 +50,13 @@ nav:nth-child(1) {
 }
 
 .domoForm {
-    border: 2px solid #338acc;
+    border: 3px solid #d5db2e;
     height: 100%;
     width: 300px;
     margin-top:0px;
     margin-right: 5%;
     padding-top:10px;
-    background-color: #55acee;
+    background-color: #3a3a34;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
     float: left;
@@ -209,19 +211,18 @@ nav:nth-child(1) {
     margin: 0 auto;
     margin-top: 2px;
     margin-bottom: 2px;
-    border: 2px solid #55acee;
+     border: 3px solid #d5db2e; 
     border-radius: 4px;
-    background-color: #55acee;
+    background-color:#3a3a34;
     padding: 10px;
     min-height:60px;
     overflow: hidden;
+    color: white;
 }
 
 .domo:hover {
-    transition: border-color 0.2s ease-out;
-    border-color: rgba(255,255,255, 0.8);
-    transition: background-color 2.6s ease-out;
-    background-color: #66bfff;
+    transition: background-color 0.2s ease-out;
+    background-color: #79e3e5;
 }
 
 img.domoFace {
