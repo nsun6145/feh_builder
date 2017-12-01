@@ -6,12 +6,24 @@ var handleDomo = function handleDomo(e) {
   $("#domoMessage").animate({ width: 'hide' }, 450);
 
   if ($("#domoName").val() == '' || $("#domoLevel").val() == '') {
-    handleError("Name and Level are required");
+    handleError("Name and Level are required bud");
     return false;
   }
 
   sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function () {
     loadDomosFromServer();
+  });
+
+  return false;
+};
+
+var handleTeam = function handleTeam(e) {
+  e.preventDefault();
+
+  $("#domoMessage").animate({ width: 'hide' }, 450);
+
+  sendAjax('POST', $("#teamForm").attr("action"), $("#teamForm").serialize(), function () {
+    loadTeamsFromServer();
   });
 
   return false;
@@ -42,60 +54,101 @@ var DomoForm = function DomoForm(props) {
         "Abel"
       )
     ),
-    React.createElement(
-      "label",
-      { htmlFor: "level" },
-      " Level: "
-    ),
+    React.createElement("label", { htmlFor: "name" }),
     React.createElement("input", { id: "domoLevel", type: "number", name: "level", placeholder: "Level" }),
-    React.createElement(
-      "label",
-      { htmlFor: "weapon" },
-      " Weapon: "
-    ),
+    React.createElement("label", { htmlFor: "weapon" }),
     React.createElement("input", { id: "domoWeapon", type: "text", name: "weapon", placeholder: "Weapon" }),
     React.createElement(
       "label",
       { htmlFor: "assist" },
       " Assist: "
     ),
-    React.createElement("select", { id: "unitAssist", name: "assist", placeholder: "Assist" }),
+    React.createElement(
+      "select",
+      { id: "unitAssist", name: "assist", placeholder: "Assist" },
+      React.createElement(
+        "option",
+        { value: "Drag Back" },
+        "Drag Back"
+      )
+    ),
     React.createElement(
       "label",
       { htmlFor: "special" },
       " Special: "
     ),
-    React.createElement("select", { id: "unitSpecial", name: "special", placeholder: "Special" }),
+    React.createElement(
+      "select",
+      { id: "unitSpecial", name: "special", placeholder: "Special" },
+      React.createElement(
+        "option",
+        { value: "Moonbow" },
+        "Moonbow"
+      )
+    ),
     React.createElement(
       "label",
       { htmlFor: "skillA" },
       " A Skill: "
     ),
-    React.createElement("select", { id: "unitSkillA", name: "skillA", placeholder: "A Skill" }),
+    React.createElement(
+      "select",
+      { id: "unitSkillA", name: "skillA", placeholder: "A Skill" },
+      React.createElement(
+        "option",
+        { value: "Death Blow 3" },
+        "Death Blow 3"
+      )
+    ),
     React.createElement(
       "label",
       { htmlFor: "skillB" },
       " B Skill: "
     ),
-    React.createElement("select", { id: "unitSkillB", name: "skillB", placeholder: "B Skill" }),
+    React.createElement(
+      "select",
+      { id: "unitSkillB", name: "skillB", placeholder: "B Skill" },
+      React.createElement(
+        "option",
+        { value: "Vantage 3" },
+        "Vantage 3"
+      )
+    ),
     React.createElement(
       "label",
       { htmlFor: "skillC" },
       " C Skill: "
     ),
-    React.createElement("select", { id: "unitSkillC", name: "skillC", placeholder: "C Skill" }),
+    React.createElement(
+      "select",
+      { id: "unitSkillC", name: "skillC", placeholder: "C Skill" },
+      React.createElement(
+        "option",
+        { value: "Hone Spd 3" },
+        "Hone Spd 3"
+      )
+    ),
     React.createElement(
       "label",
       { htmlFor: "seal" },
       " Seal: "
     ),
-    React.createElement("select", { id: "unitSeal", name: "seal", placeholder: "Seal" }),
+    React.createElement(
+      "select",
+      { id: "unitSeal", name: "seal", placeholder: "Seal" },
+      React.createElement(
+        "option",
+        { value: "Quickened Pulse" },
+        "Quickened Pulse"
+      )
+    ),
     React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
     React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Create Unit" })
   );
 };
 
 var DomoList = function DomoList(props) {
+
   if (props.domos.length === 0) {
     return React.createElement(
       "div",
@@ -103,7 +156,7 @@ var DomoList = function DomoList(props) {
       React.createElement(
         "h3",
         { className: "emptyDomo" },
-        "No units yet"
+        "Nothing yet."
       )
     );
   }
@@ -111,12 +164,13 @@ var DomoList = function DomoList(props) {
   var domoText = '';
   var domoNodes = props.domos.map(function (domo) {
 
-    domoText += "Name: " + domo.name + " Level: " + domo.level + " Weapon: " + domo.weapon + " \n";
-
+    domoText += "Name: " + domo.name + " Level: " + domo.level + " Weapon: " + domo.weapon + " Assist: " + domo.assist + " Special: " + domo.special + " A Skill: " + domo.skillA + " B Skill : " + domo.skillB + " C Skill: " + domo.skillC + "  Seal: " + domo.seal + "  \n";
+    //const id = e.target.attribute("data-key");
+    //const remove = db.collection.remove(id,true);
     return React.createElement(
       "div",
-      { key: domo._id, className: "domo" },
-      React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "domo face", className: "domoFace" }),
+      { "data-key": domo._id, className: "domo" },
+      React.createElement("img", { src: "/assets/img/stone_icon.png", alt: "domo face", className: "domoFace" }),
       React.createElement(
         "h3",
         { className: "domoName" },
@@ -171,7 +225,7 @@ var DomoList = function DomoList(props) {
         "Seal: ",
         domo.seal
       ),
-      React.createElement("input", { className: "domoDelete", type: "submit", value: "Delete" })
+      React.createElement("input", { "data-key": domo._id, className: "domoDelete", type: "button", value: "Delete" })
     );
   });
 
@@ -189,15 +243,162 @@ var DomoList = function DomoList(props) {
 
 var loadDomosFromServer = function loadDomosFromServer() {
   sendAjax('GET', '/getDomos', null, function (data) {
-    ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#domos"));
+    ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#list"));
+  });
+};
+
+var teamForm = function teamForm(props) {
+
+  var teamNodes = props.domo.map(function (domo) {
+    return React.createElement(
+      "option",
+      { value: domo.name },
+      domo.name
+    );
+  });
+
+  return React.createElement(
+    "form",
+    { id: "teamForm",
+      onSubmit: handleDomo,
+      name: "teamForm",
+      action: "/teamMaker",
+      method: "POST",
+      className: "teamForm"
+    },
+    React.createElement(
+      "label",
+      { htmlFor: "name" },
+      "Unit: "
+    ),
+    React.createElement(
+      "select",
+      { id: "unitName1", name: "name", placeholder: "Name" },
+      teamNodes
+    ),
+    React.createElement(
+      "label",
+      { htmlFor: "name" },
+      "Unit: "
+    ),
+    React.createElement(
+      "select",
+      { id: "unitName2", name: "name", placeholder: "Name" },
+      teamNodes
+    ),
+    React.createElement(
+      "label",
+      { htmlFor: "name" },
+      "Unit: "
+    ),
+    React.createElement(
+      "select",
+      { id: "unitName3", name: "name", placeholder: "Name" },
+      teamNodes
+    ),
+    React.createElement(
+      "label",
+      { htmlFor: "name" },
+      "Unit: "
+    ),
+    React.createElement(
+      "select",
+      { id: "unitName4", name: "name", placeholder: "Name" },
+      teamNodes
+    ),
+    React.createElement("input", { id: "teamAdd", type: "submit" })
+  );
+};
+
+var teamList = function teamList(props) {
+  if (props.teams.length === 0) {
+    return React.createElement(
+      "div",
+      { className: "teamList" },
+      React.createElement(
+        "h3",
+        { className: "emptyTeam" },
+        "No teams yet."
+      )
+    );
+  }
+  var teamNodes = props.teams.map(function (team) {
+    var id = e.target.attribute("data-key");
+    return React.createElement(
+      "div",
+      { "data-key": team._id, className: "team" },
+      React.createElement(
+        "h3",
+        { className: "unit" },
+        team.unit1
+      ),
+      React.createElement(
+        "h3",
+        { className: "unit" },
+        team.unit2
+      ),
+      React.createElement(
+        "h3",
+        { className: "unit" },
+        team.unit3
+      ),
+      React.createElement(
+        "h3",
+        { className: "unit" },
+        team.unit4
+      )
+    );
+  });
+};
+
+var loadTeamsFromServer = function loadTeamsFromServer() {
+  sendAjax('GET', '/getTeams', null, function (data) {
+    ReactDOM.render(React.createElement(DomoList, { domos: data.teams }), document.querySelector("#list"));
   });
 };
 
 var setup = function setup(csrf) {
-  ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
 
-  ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
+  var teamButton = document.querySelector("#teamButton");
+
+  ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#maker"));
+
+  ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#list"));
   loadDomosFromServer();
+
+  teamButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createTeamBuilder(csrf);
+    return false;
+  });
+
+  /*
+    loginButton.addEventListener("click", (e) =>{
+    e.preventDefault();
+    createLoginWindow(csrf);
+    return false;
+  });
+  */
+};
+
+var createUnitMaker = function createUnitMaker(csrf) {
+  ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#maker"));
+
+  ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#list"));
+  loadDomosFromServer();
+};
+
+var createTeamBuilder = function createTeamBuilder(csrf) {
+  var unitButton = document.querySelector("#unitButton");
+  ReactDOM.render(React.createElement("teamForm", { csrf: csrf }), document.querySelector("#maker"));
+  ReactDOM.render(React.createElement("teamList", { csrf: csrf }), document.querySelector("#list"));
+  loadTeamsFromServer();
+
+  unitButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createUnitMaker(csrf);
+    return false;
+  });
 };
 
 var getToken = function getToken() {

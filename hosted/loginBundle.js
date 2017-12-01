@@ -103,27 +103,6 @@ var createSignupWindow = function createSignupWindow(csrf) {
   ReactDOM.render(React.createElement(SignupWindow, { csrf: csrf }), document.querySelector("#content"));
 };
 
-/*
-const ErrorWindow(props){
-  return(
-    <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <style>
-      html,body{
-        text-align: center;
-      }
-    </style>
-  <title>Error</title>
-  </head>
-  <body>
-    <img id="error" src="assets/img/fae_404.jpg" alt= ":("/>
-    <h3>Sorry, nothing's here...</h3>
-  </body>
-  </html>
-  );
-};
-*/
 var setup = function setup(csrf) {
   var loginButton = document.querySelector("#loginButton");
   var signupButton = document.querySelector("#signupButton");

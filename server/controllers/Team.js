@@ -1,7 +1,10 @@
 const models = require('../models');
 
+console.dir(models);
+
 const Team = models.Team;
 
+//creates the team view
 const teamPage = (req, res) => {
   Team.TeamModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
@@ -9,10 +12,11 @@ const teamPage = (req, res) => {
       return res.status(400).json({ error: 'Whoops. Somethin\' happend.' });
     }
 
-    return res.render('app', { csrfToken: req.csrfToken(), domos: docs });
+    return res.render('app', { csrfToken: req.csrfToken(), teams: docs });
   });
 };
 
+//handles building of team
 const buildTeam = (req, res) => {
   if (!req.body.unit1 && !req.body.unit2 && !req.body.unit3 && !req.body.unit4) {
     return res.status(400).json({ error: 'Ya need at least one unit.' });
@@ -43,14 +47,16 @@ const buildTeam = (req, res) => {
   return teamPromise;
 };
 
+//fetches the teams
 const getTeams = (req, res) => Team.TeamModel.findByOwner(req.session.account._id, (err, docs) => {
   if (err) {
     console.log(err);
     return res.status(400).json({ error: 'An error occurred' });
   }
 
-  return res.json({ domos: docs });
+  return res.json({ teams: docs });
 });
+
 
 module.exports.teamPage = teamPage;
 module.exports.build = buildTeam;

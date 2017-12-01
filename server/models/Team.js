@@ -58,5 +58,5 @@ TeamSchema.statics.findByOwner = (ownerId, callback) => {
 
 TeamModel = mongoose.model('Team', TeamSchema);
 
-module.exports.DomoModel = TeamModel;
-module.exports.DomoSchema = TeamSchema;
+module.exports.TeamModel = TeamModel;
+module.exports.TeamSchema = TeamSchema;

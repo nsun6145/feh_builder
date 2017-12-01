@@ -2,6 +2,7 @@ const models = require('../models');
 
 const Domo = models.Domo;
 
+//gets the unit builder page
 const makerPage = (req, res) => {
   Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
@@ -13,7 +14,9 @@ const makerPage = (req, res) => {
   });
 };
 
+//gets data for making unit
 const makeDomo = (req, res) => {
+  //checks to see if name and level fields are filled in
   if (!req.body.name || !req.body.level) {
     return res.status(400).json({ error: 'Ya need a name and a level bud.' });
   }
@@ -47,6 +50,7 @@ const makeDomo = (req, res) => {
   return domoPromise;
 };
 
+//fetches the units
 const getDomos = (request, response) => {
   const req = request;
   const res = response;
@@ -60,6 +64,7 @@ const getDomos = (request, response) => {
     return res.json({ domos: docs });
   });
 };
+
 /*
 const deleteDomos = (req, res) => {
   req.remove();

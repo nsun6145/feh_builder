@@ -1,3 +1,5 @@
+
+//The two below handle login and signup respectively 
 const handleLogin = (e) =>{
   e.preventDefault();
   
@@ -35,6 +37,7 @@ const handleSignup = (e) =>{
   return false;
 };
 
+//login view
 const LoginWindow = (props)=>{
   return(
   <form id="loginForm" name = "loginForm"
@@ -53,6 +56,8 @@ const LoginWindow = (props)=>{
   </form>
   );
 };
+
+//sign-up view
   const SignupWindow = (props) =>{
     return(
       <form id="signupForm"
@@ -74,6 +79,7 @@ const LoginWindow = (props)=>{
     );
   };
 
+//the two below create the above two views
 const createLoginWindow = (csrf) =>{
   ReactDOM.render(
   <LoginWindow csrf={csrf} />,
@@ -88,6 +94,7 @@ const createSignupWindow = (csrf) =>{
   );
 };
 
+//inital page setup
 const setup = (csrf) => {
   const loginButton = document.querySelector("#loginButton");
   const signupButton = document.querySelector("#signupButton");
@@ -106,7 +113,8 @@ const setup = (csrf) => {
   
   createLoginWindow(csrf);
 };
-           
+
+//user token
 const getToken=()=>{
   sendAjax('GET', '/getToken' ,null,(result) =>{
     setup(result.csrfToken);

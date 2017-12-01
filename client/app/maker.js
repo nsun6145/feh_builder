@@ -1,3 +1,5 @@
+
+//The two below handle requests for respectives
 const handleDomo = (e) => {
   e.preventDefault();
   
@@ -22,13 +24,14 @@ const handleTeam = (e) => {
   $("#domoMessage").animate({width:'hide'}, 450);
   
   sendAjax('POST', $("#teamForm").attr("action"), $("#teamForm").serialize(), function(){
-  loadDomosFromServer();
+  loadTeamsFromServer();
   });
   
            
   return false;
 };
-           
+
+//Handles form for creating units
 const DomoForm = (props) => {
   
     return (
@@ -43,48 +46,61 @@ const DomoForm = (props) => {
       <select id="domoName" name="name" placeholder="Name">
       <option value="Abel">Abel</option>
       </select>
-      <label htmlFor="level"> Level: </label>
+      <label htmlFor="name"> Level: </label>
       <input id="domoLevel" type= "number" name="level" placeholder="Level"/>
       <label htmlFor="weapon"> Weapon: </label>
       <input id="domoWeapon" type= "text" name="weapon" placeholder="Weapon"/>
       <label htmlFor="assist"> Assist: </label>
-      <select id="unitAssist" name="assist" placeholder="Assist"></select>
+      <select id="unitAssist" name="assist" placeholder="Assist">
+      <option value="Drag Back">Drag Back</option>  
+      </select>
       <label htmlFor="special"> Special: </label>
-      <select id="unitSpecial" name="special" placeholder="Special"></select>
+      <select id="unitSpecial" name="special" placeholder="Special">
+      <option value="Moonbow">Moonbow</option>   
+      </select>
       <label htmlFor="skillA"> A Skill: </label>
-      <select id="unitSkillA" name="skillA" placeholder="A Skill"></select>
+      <select id="unitSkillA" name="skillA" placeholder="A Skill">
+        <option value="Death Blow 3">Death Blow 3</option> 
+        </select>
         <label htmlFor="skillB"> B Skill: </label>
-      <select id="unitSkillB" name="skillB" placeholder="B Skill"></select>
+      <select id="unitSkillB" name="skillB" placeholder="B Skill">
+      <option value="Vantage 3">Vantage 3</option> 
+      </select>
         <label htmlFor="skillC"> C Skill: </label>
-      <select id="unitSkillC" name="skillC" placeholder="C Skill"></select>
+      <select id="unitSkillC" name="skillC" placeholder="C Skill">
+      <option value="Hone Spd 3">Hone Spd 3</option> 
+      </select>
       <label htmlFor="seal"> Seal: </label>
-      <select id="unitSeal" name="seal" placeholder="Seal"></select>
+      <select id="unitSeal" name="seal" placeholder="Seal">
+      <option value="Quickened Pulse">Quickened Pulse</option> 
+      </select>
       <input type="hidden" name="_csrf" value={props.csrf}/>
       <input className="makeDomoSubmit" type="submit" value="Create Unit" />
     </form>
     );
   };
 
+//displays list of units
 const DomoList = function(props){
   
-  
-  
+  //if there is no units made
   if(props.domos.length === 0){
     return(
       <div className= "domoList">
-      <h3 className="emptyDomo">No units yet</h3>
+      <h3 className="emptyDomo">Nothing yet.</h3>
       </div>
     );
   }
-  <div class="navlink"><a id="teamButton" href="/login">Team</a></div>
+  
   let domoText = '';
   const domoNodes = props.domos.map(function(domo){
     
     domoText += `Name: ${domo.name} Level: ${domo.level} Weapon: ${domo.weapon} Assist: ${domo.assist} Special: ${domo.special} A Skill: ${domo.skillA} B Skill : ${domo.skillB} C Skill: ${domo.skillC}  Seal: ${domo.seal}  \n`;
-    const id = e.target.attribute("data-key");
+    //const id = e.target.attribute("data-key");
+    //const remove = db.collection.remove(id,true);
     return(
     <div data-key={domo._id} className="domo">
-      <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+      <img src="/assets/img/stone_icon.png" alt="domo face" className="domoFace" />
         <h3 className="domoName"> Name: {domo.name}</h3>
         <h3 className="domoLevel"> Level: {domo.level}</h3>
         <h3 className="domoWeapon"> Weapon: {domo.weapon}</h3>
@@ -95,7 +111,7 @@ const DomoList = function(props){
         <h3 className = "unitSkillC">C Skill: {domo.skillC}</h3>
         <h3 className = "unitSeal">Seal: {domo.seal}</h3>
         
-        <input data-key={domo._id} className="domoDelete" type="button" value="Delete" onClick = db.collection.remove(id,true)/>
+        <input data-key={domo._id} className="domoDelete" type="button" value="Delete"/>
     </div>
     );
   });
@@ -111,16 +127,17 @@ const DomoList = function(props){
 };
 
 
-
+//loads units from server
 const loadDomosFromServer = () => {
   sendAjax('GET', '/getDomos', null, (data) =>{
    ReactDOM.render(
-     <DomoList domos={data.domos} />, document.querySelector("#domos")
+     <DomoList domos={data.domos} />, document.querySelector("#list")
    ); 
   });
 };
 
-const teamForm = function(props) =>{
+//form for creating teams
+const teamForm = (props) => {
   
    const teamNodes = props.domo.map(function(domo){
     return(
@@ -137,9 +154,7 @@ const teamForm = function(props) =>{
       method="POST"
       className="teamForm"
      >
-      
-      <div class="navlink"><a id="unitButton" href="/login">Unit</a></div>
-      
+            
       <label htmlFor="name">Unit: </label>
       <select id="unitName1" name="name" placeholder="Name">
       {teamNodes}
@@ -166,6 +181,7 @@ const teamForm = function(props) =>{
   
 };
 
+//displays teams
 const teamList = function(props){
   if(props.teams.length === 0){
     return(
@@ -189,7 +205,21 @@ const teamList = function(props){
   
 };
 
+//self-explanatory
+const loadTeamsFromServer = () =>{
+  sendAjax('GET', '/getTeams', null, (data) =>{
+   ReactDOM.render(
+     <DomoList domos={data.teams} />, document.querySelector("#list")
+   ); 
+  });
+};
+
+//initial page setup
 const setup = function(csrf){
+  
+  const teamButton = document.querySelector("#teamButton");
+  
+  
   ReactDOM.render(
   <DomoForm csrf={csrf}/>, document.querySelector("#maker")
   );
@@ -205,14 +235,16 @@ const setup = function(csrf){
     return false;
   });
   
+  /*
     loginButton.addEventListener("click", (e) =>{
     e.preventDefault();
     createLoginWindow(csrf);
     return false;
   });
-  
+  */
 };
 
+//loads unit view
 const createUnitMaker = function(csrf){
   ReactDOM.render(
   <DomoForm csrf={csrf}/>, document.querySelector("#maker")
@@ -224,15 +256,26 @@ const createUnitMaker = function(csrf){
   loadDomosFromServer();
 }
 
+//loads team view
 const createTeamBuilder = function(csrf){
+  const unitButton = document.querySelector("#unitButton");
   ReactDOM.render(
-  <TeamForm csrf={csrf}/>, document.querySelector("#maker")
+  <teamForm csrf={csrf}/>, document.querySelector("#maker")
   );
   ReactDOM.render(
-  <TeamList csrf={csrf}/>, document.querySelector("#list")
+  <teamList csrf={csrf}/>, document.querySelector("#list")
   );
+  loadTeamsFromServer();
+  
+    unitButton.addEventListener("click", (e) =>{
+    e.preventDefault();
+    createUnitMaker(csrf);
+    return false;
+  });
+  
 };
 
+//getting user token
 const getToken = () =>{
    sendAjax('GET', '/getToken', null, (result) => {
      setup(result.csrfToken);
