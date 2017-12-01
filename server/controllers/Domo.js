@@ -15,13 +15,19 @@ const makerPage = (req, res) => {
 
 const makeDomo = (req, res) => {
   if (!req.body.name || !req.body.level) {
-    return res.status(400).json({ error: 'Name and level are required.' });
+    return res.status(400).json({ error: 'Ya need a name and a level bud.' });
   }
 
   const domoData = {
     name: req.body.name,
     level: req.body.level,
     weapon: req.body.weapon,
+    assist: req.body.assist,
+    special: req.body.special,
+    skillA: req.body.skillA,
+    skillB: req.body.skillB,
+    skillC: req.body.skillC,
+    seal: req.body.seal,
 
     owner: req.session.account._id,
   };

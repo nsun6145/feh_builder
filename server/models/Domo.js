@@ -82,6 +82,12 @@ DomoSchema.statics.toAPI = doc => ({
   name: doc.name,
   level: doc.level,
   weapon: doc.weapon,
+  assist: doc.assist,
+  special: doc.special,
+  skillA: doc.skillA,
+  skillB: doc.skillB,
+  skillC: doc.skillC,
+  seal: doc.seal,
 });
 
 DomoSchema.statics.findByOwner = (ownerId, callback) => {
@@ -89,7 +95,9 @@ DomoSchema.statics.findByOwner = (ownerId, callback) => {
     owner: convertId(ownerId),
   };
 
-  return DomoModel.find(search).select('name level weapon').exec(callback);
+  return DomoModel.find(search).select(
+    'name level weapon assist special skillA skillB skillC seal').exec(
+    callback);
 };
 
 DomoModel = mongoose.model('Domo', DomoSchema);
