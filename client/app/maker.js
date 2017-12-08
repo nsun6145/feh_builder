@@ -73,6 +73,9 @@ const DomoForm = (props) => {
       <select id="unitSeal" name="seal" placeholder="Seal">
       <option value="Quickened Pulse">Quickened Pulse</option> 
       </select>
+      <label htmlFor="note"> Note: </label>
+      <textarea rows="5" col = "8" name = "note"></textarea>  
+        
       <input type="hidden" name="_csrf" value={props.csrf}/>
       <input className="makeDomoSubmit" type="submit" value="Create Unit" />
     </form>
@@ -103,17 +106,20 @@ const DomoList = function(props){
         <h3 className="domoName"> Name: {domo.name}</h3>
         <h3 className="domoLevel"> Level: {domo.level}</h3>
 
-        <h3 className="domoWeapon"> Weapon: {domo.weapon}</h3>
-        <h3 className = "unitAssist">Assist: {domo.assist}</h3>
-        <h3 className = "unitSpecial">Special: {domo.special}</h3>
-        <h3 className = "unitSkillA">A Skill: {domo.skillA}</h3>
-        <h3 className = "unitSkillB">B Skill: {domo.skillB}</h3>
-        <h3 className = "unitSkillC">C Skill: {domo.skillC}</h3>
-        <h3 className = "unitSeal">Seal: {domo.seal}</h3>
+        <h3 className="unitP"> Weapon: {domo.weapon}</h3>
+        <h3 className = "unitP">Assist: {domo.assist}</h3>
+        <h3 className = "unitP">Special: {domo.special}</h3>
+        <h3 className = "unitP">A Skill: {domo.skillA}</h3>
+        <h3 className = "unitP">B Skill: {domo.skillB}</h3>
+        <h3 className = "unitP">C Skill: {domo.skillC}</h3>
+        <h3 className = "unitP">Seal: {domo.seal}</h3>
+        <h3 className = "unitP">Notes: {domo.note}</h3>
         <div id = "note">
         <textarea rows="5" cols= "20"></textarea>
         </div>
+        <input data-key={domo._id} className="noteAdd" type="button" value="Add/Replace Note"/>
         <input data-key={domo._id} className="domoDelete" type="button" value="Delete Unit"/>
+       
     </div>
     );
   });

@@ -6,7 +6,7 @@ const errorPage = (req, res) => {
   res.render('notfound');
 };
 
-//below contains the use of the fields for respective pages
+// below contains the use of the fields for respective pages
 const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
@@ -16,7 +16,7 @@ const logout = (req, res) => {
   res.redirect('/');
 };
 
-//checks for required fields for login
+// checks for required fields for login
 const login = (request, response) => {
   const req = request;
   const res = response;
@@ -37,7 +37,7 @@ const login = (request, response) => {
   });
 };
 
-//checks for required fields for signup
+// checks for required fields for signup
 const signup = (request, response) => {
   const req = request;
   const res = response;

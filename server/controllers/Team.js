@@ -2,7 +2,7 @@ const models = require('../models');
 
 const Team = models.Team;
 
-//creates the team view
+// creates the team view
 const teamPage = (req, res) => {
   Team.TeamModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
@@ -14,7 +14,7 @@ const teamPage = (req, res) => {
   });
 };
 
-//handles building of team
+// handles building of team
 const buildTeam = (req, res) => {
   if (!req.body.unit1 && !req.body.unit2 && !req.body.unit3 && !req.body.unit4) {
     return res.status(400).json({ error: 'Ya need at least one unit.' });
@@ -45,7 +45,7 @@ const buildTeam = (req, res) => {
   return teamPromise;
 };
 
-//fetches the teams
+// fetches the teams
 const getTeams = (req, res) => Team.TeamModel.findByOwner(req.session.account._id, (err, docs) => {
   if (err) {
     console.log(err);

@@ -66,6 +66,12 @@ const DomoSchema = new mongoose.Schema({
     trim: true,
   },
 
+  note: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
@@ -88,6 +94,7 @@ DomoSchema.statics.toAPI = doc => ({
   skillB: doc.skillB,
   skillC: doc.skillC,
   seal: doc.seal,
+  note: doc.note,
 });
 
 DomoSchema.statics.findByOwner = (ownerId, callback) => {
@@ -96,7 +103,7 @@ DomoSchema.statics.findByOwner = (ownerId, callback) => {
   };
 
   return DomoModel.find(search).select(
-    'name level weapon assist special skillA skillB skillC seal').exec(
+    'name level weapon assist special skillA skillB skillC seal note').exec(
     callback);
 };
 

@@ -152,6 +152,12 @@ var DomoForm = function DomoForm(props) {
         "Quickened Pulse"
       )
     ),
+    React.createElement(
+      "label",
+      { htmlFor: "note" },
+      " Note: "
+    ),
+    React.createElement("textarea", { rows: "5", col: "8", name: "note" }),
     React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
     React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Create Unit" })
   );
@@ -197,51 +203,58 @@ var DomoList = function DomoList(props) {
       ),
       React.createElement(
         "h3",
-        { className: "domoWeapon" },
+        { className: "unitP" },
         " Weapon: ",
         domo.weapon
       ),
       React.createElement(
         "h3",
-        { className: "unitAssist" },
+        { className: "unitP" },
         "Assist: ",
         domo.assist
       ),
       React.createElement(
         "h3",
-        { className: "unitSpecial" },
+        { className: "unitP" },
         "Special: ",
         domo.special
       ),
       React.createElement(
         "h3",
-        { className: "unitSkillA" },
+        { className: "unitP" },
         "A Skill: ",
         domo.skillA
       ),
       React.createElement(
         "h3",
-        { className: "unitSkillB" },
+        { className: "unitP" },
         "B Skill: ",
         domo.skillB
       ),
       React.createElement(
         "h3",
-        { className: "unitSkillC" },
+        { className: "unitP" },
         "C Skill: ",
         domo.skillC
       ),
       React.createElement(
         "h3",
-        { className: "unitSeal" },
+        { className: "unitP" },
         "Seal: ",
         domo.seal
+      ),
+      React.createElement(
+        "h3",
+        { className: "unitP" },
+        "Notes: ",
+        domo.note
       ),
       React.createElement(
         "div",
         { id: "note" },
         React.createElement("textarea", { rows: "5", cols: "20" })
       ),
+      React.createElement("input", { "data-key": domo._id, className: "noteAdd", type: "button", value: "Add/Replace Note" }),
       React.createElement("input", { "data-key": domo._id, className: "domoDelete", type: "button", value: "Delete Unit" })
     );
   });
@@ -420,7 +433,7 @@ var createUnitMaker = function createUnitMaker(csrf) {
 
 //loads team view
 var createTeamBuilder = function createTeamBuilder(csrf) {
-  ReactDOM.render(React.createElement("teamFjorm", { csrf: csrf }), document.querySelector("#maker"));
+  ReactDOM.render(React.createElement("teamForm", { csrf: csrf }), document.querySelector("#maker"));
   ReactDOM.render(React.createElement("teamList", { teams: [] }), document.querySelector("#list"));
   //loadTeamsFromServer();
 };
