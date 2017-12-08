@@ -43,123 +43,163 @@ var DomoForm = function DomoForm(props) {
       className: "domoForm"
     },
     React.createElement(
-      "label",
-      { htmlFor: "name" },
-      "Name: "
-    ),
-    React.createElement(
-      "select",
-      { id: "domoName", name: "name", placeholder: "Name" },
+      "ul",
+      null,
       React.createElement(
-        "option",
-        { value: "Abel" },
-        "Abel"
-      )
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "name" },
-      " Level: "
-    ),
-    React.createElement("input", { id: "domoLevel", type: "number", name: "level", placeholder: "Level" }),
-    React.createElement(
-      "label",
-      { htmlFor: "weapon" },
-      " Weapon: "
-    ),
-    React.createElement("input", { id: "domoWeapon", type: "text", name: "weapon", placeholder: "Weapon" }),
-    React.createElement(
-      "label",
-      { htmlFor: "assist" },
-      " Assist: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitAssist", name: "assist", placeholder: "Assist" },
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          "Name: "
+        ),
+        React.createElement(
+          "select",
+          { id: "domoName", name: "name", placeholder: "Name" },
+          React.createElement(
+            "option",
+            { value: "Abel" },
+            "Abel"
+          )
+        )
+      ),
       React.createElement(
-        "option",
-        { value: "Drag Back" },
-        "Drag Back"
-      )
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "special" },
-      " Special: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitSpecial", name: "special", placeholder: "Special" },
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "level" },
+          " Level: "
+        ),
+        React.createElement("input", { id: "domoName", type: "number", name: "level", placeholder: "Level" })
+      ),
       React.createElement(
-        "option",
-        { value: "Moonbow" },
-        "Moonbow"
-      )
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "skillA" },
-      " A Skill: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitSkillA", name: "skillA", placeholder: "A Skill" },
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "weapon" },
+          " Weapon: "
+        ),
+        React.createElement("input", { id: "domoName", type: "text", name: "weapon", placeholder: "Weapon" })
+      ),
       React.createElement(
-        "option",
-        { value: "Death Blow 3" },
-        "Death Blow 3"
-      )
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "skillB" },
-      " B Skill: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitSkillB", name: "skillB", placeholder: "B Skill" },
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "assist" },
+          " Assist: "
+        ),
+        React.createElement(
+          "select",
+          { id: "domoName", name: "assist", placeholder: "Assist" },
+          React.createElement(
+            "option",
+            { value: "Drag Back" },
+            "Drag Back"
+          )
+        )
+      ),
       React.createElement(
-        "option",
-        { value: "Vantage 3" },
-        "Vantage 3"
-      )
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "skillC" },
-      " C Skill: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitSkillC", name: "skillC", placeholder: "C Skill" },
+        "label",
+        { htmlFor: "special" },
+        " Special: "
+      ),
       React.createElement(
-        "option",
-        { value: "Hone Spd 3" },
-        "Hone Spd 3"
-      )
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "seal" },
-      " Seal: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitSeal", name: "seal", placeholder: "Seal" },
+        "select",
+        { id: "domoName", name: "special", placeholder: "Special" },
+        React.createElement(
+          "option",
+          { value: "Moonbow" },
+          "Moonbow"
+        )
+      ),
       React.createElement(
-        "option",
-        { value: "Quickened Pulse" },
-        "Quickened Pulse"
-      )
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "note" },
-      " Note: "
-    ),
-    React.createElement("textarea", { rows: "5", col: "8", name: "note" }),
-    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-    React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Create Unit" })
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "skillA" },
+          " A Skill: "
+        ),
+        React.createElement(
+          "select",
+          { id: "domoName", name: "skillA", placeholder: "A Skill" },
+          React.createElement(
+            "option",
+            { value: "Death Blow 3" },
+            "Death Blow 3"
+          )
+        )
+      ),
+      React.createElement(
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          " B Skill: "
+        ),
+        React.createElement(
+          "select",
+          { id: "domoName", name: "skillB", placeholder: "B Skill" },
+          React.createElement(
+            "option",
+            { value: "Vantage 3" },
+            "Vantage 3"
+          )
+        )
+      ),
+      React.createElement(
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          " C Skill: "
+        ),
+        React.createElement(
+          "select",
+          { id: "domoName", name: "skillC", placeholder: "C Skill" },
+          React.createElement(
+            "option",
+            { value: "Hone Spd 3" },
+            "Hone Spd 3"
+          )
+        )
+      ),
+      React.createElement(
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          " Seal: "
+        ),
+        React.createElement(
+          "select",
+          { id: "domoName", name: "seal", placeholder: "Seal" },
+          React.createElement(
+            "option",
+            { value: "Quickened Pulse" },
+            "Quickened Pulse"
+          )
+        )
+      ),
+      React.createElement(
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          " Note: "
+        ),
+        React.createElement("textarea", { rows: "5", col: "8", name: "note" })
+      ),
+      React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+      React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Create Unit" })
+    )
   );
 };
 

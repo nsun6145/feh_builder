@@ -52,7 +52,7 @@ nav:nth-child(1) {
 .domoForm {
     border: 3px solid #d5db2e;
     height: 100%;
-    width: 300px;
+    width: 330px;
     margin-top:0px;
     margin-right: 5%;
     padding-top:10px;
@@ -65,14 +65,15 @@ nav:nth-child(1) {
 .domoForm label {
     display: inline-block;
     width: 75px;
-    margin-left: 10px;
+    margin-left: 3px;
     font-size: 1.2em;
-    float: left;
+    //float: left;
+   
     color: white;
 }
 
-.domoForm input[type=text] {
-    float:left;
+.domoForm input[type=text]{
+    //float:right;
 }
 
 

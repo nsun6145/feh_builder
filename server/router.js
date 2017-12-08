@@ -12,6 +12,7 @@ const router = (app) => {
   app.get('/maker', mid.requiresLogin, controllers.Domo.makerPage);
   app.post('/maker', mid.requiresLogin, controllers.Domo.make);
   app.get('/teamMaker', mid.requiresLogin, controllers.Team.teamPage);
+  // app.post('/deleteUnit', controllers.Domo.deleteUnit);
   app.post('/teamMaker', mid.requiresLogin, controllers.Team.build);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.get('*', mid.requiresSecure, controllers.Account.errorPage);

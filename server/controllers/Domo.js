@@ -1,6 +1,22 @@
 const models = require('../models');
+// const stats = require('fire-emblem-heroes-stats');
 
 const Domo = models.Domo;
+/*
+const getNames = (req, res) => {
+
+  const obj = stats.getReleasedHeroes();
+
+  const unitNames = {};
+
+  for (let i = 0; i < obj.length; i++) {
+    unitNames[i] = obj[i].name;
+  }
+
+  return unitNames;
+};
+*/
+
 
 // gets the unit builder page
 const makerPage = (req, res) => {
@@ -50,6 +66,19 @@ const makeDomo = (req, res) => {
   return domoPromise;
 };
 
+// Deletes a unit
+/*
+const deleteUnit = (req,res) =>{
+  const search ={
+    id: req
+  };
+
+
+  //unit.remove();
+
+};
+*/
+
 // fetches the units
 const getDomos = (request, response) => {
   const req = request;
@@ -74,3 +103,4 @@ const deleteDomos = (req, res) => {
 module.exports.makerPage = makerPage;
 module.exports.make = makeDomo;
 module.exports.getDomos = getDomos;
+// module.exports.getNames = getNames;

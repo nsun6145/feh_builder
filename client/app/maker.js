@@ -41,44 +41,72 @@ const DomoForm = (props) => {
       method="POST"
       className="domoForm"
      >
+      <ul>
+        <li>
       <label htmlFor="name">Name: </label>
       <select id="domoName" name="name" placeholder="Name">
       <option value="Abel">Abel</option>
       </select>
-      <label htmlFor="name"> Level: </label>
-      <input id="domoLevel" type= "number" name="level" placeholder="Level"/>
+        </li>
+        
+      <li>
+      <label htmlFor="level"> Level: </label>
+      <input id="domoName" type= "number" name="level" placeholder="Level"/>
+        </li>
+      
+        <li>
       <label htmlFor="weapon"> Weapon: </label>
-      <input id="domoWeapon" type= "text" name="weapon" placeholder="Weapon"/>
+      <input id="domoName" type= "text" name="weapon" placeholder="Weapon"/>
+        </li>
+      
+        <li>
       <label htmlFor="assist"> Assist: </label>
-      <select id="unitAssist" name="assist" placeholder="Assist">
+      <select id="domoName" name="assist" placeholder="Assist">
       <option value="Drag Back">Drag Back</option>  
       </select>
+      </li>  
       <label htmlFor="special"> Special: </label>
-      <select id="unitSpecial" name="special" placeholder="Special">
+      <select id="domoName" name="special" placeholder="Special">
       <option value="Moonbow">Moonbow</option>   
       </select>
+        
+      <li>  
       <label htmlFor="skillA"> A Skill: </label>
-      <select id="unitSkillA" name="skillA" placeholder="A Skill">
+      <select id="domoName" name="skillA" placeholder="A Skill">
         <option value="Death Blow 3">Death Blow 3</option> 
         </select>
-        <label htmlFor="skillB"> B Skill: </label>
-      <select id="unitSkillB" name="skillB" placeholder="B Skill">
+      </li>
+        
+      <li>
+      <label htmlFor="name"> B Skill: </label>
+      <select id="domoName" name="skillB" placeholder="B Skill">
       <option value="Vantage 3">Vantage 3</option> 
       </select>
-        <label htmlFor="skillC"> C Skill: </label>
-      <select id="unitSkillC" name="skillC" placeholder="C Skill">
+      </li>
+        
+      <li>
+      <label htmlFor="name"> C Skill: </label>
+      <select id="domoName" name="skillC" placeholder="C Skill">
       <option value="Hone Spd 3">Hone Spd 3</option> 
       </select>
-      <label htmlFor="seal"> Seal: </label>
-      <select id="unitSeal" name="seal" placeholder="Seal">
+      </li>
+        
+      <li>
+      <label htmlFor="name"> Seal: </label>
+      <select id="domoName" name="seal" placeholder="Seal">
       <option value="Quickened Pulse">Quickened Pulse</option> 
       </select>
-      <label htmlFor="note"> Note: </label>
-      <textarea rows="5" col = "8" name = "note"></textarea>  
+        </li>
         
+      <li>  
+      <label htmlFor="name"> Note: </label>
+      <textarea rows="5" col = "8" name = "note"></textarea>  
+      </li>  
       <input type="hidden" name="_csrf" value={props.csrf}/>
       <input className="makeDomoSubmit" type="submit" value="Create Unit" />
+    </ul>
     </form>
+  
     );
   };
 
@@ -104,8 +132,9 @@ const DomoList = function(props){
     <div data-key={domo._id} className="domo">
       <img src="/assets/img/stone_icon.png" alt="domo face" className="domoFace" />
         <h3 className="domoName"> Name: {domo.name}</h3>
+        
         <h3 className="domoLevel"> Level: {domo.level}</h3>
-
+        
         <h3 className="unitP"> Weapon: {domo.weapon}</h3>
         <h3 className = "unitP">Assist: {domo.assist}</h3>
         <h3 className = "unitP">Special: {domo.special}</h3>
@@ -119,8 +148,7 @@ const DomoList = function(props){
         </div>
         <input data-key={domo._id} className="noteAdd" type="button" value="Add/Replace Note"/>
         <input data-key={domo._id} className="domoDelete" type="button" value="Delete Unit"/>
-       
-    </div>
+       </div>
     );
   });
   
