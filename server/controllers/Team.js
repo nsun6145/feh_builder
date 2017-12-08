@@ -1,7 +1,5 @@
 const models = require('../models');
 
-console.dir(models);
-
 const Team = models.Team;
 
 //creates the team view

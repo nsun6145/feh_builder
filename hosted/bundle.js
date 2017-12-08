@@ -1,5 +1,6 @@
 "use strict";
 
+//The two below handle requests for respectives
 var handleDomo = function handleDomo(e) {
   e.preventDefault();
 
@@ -29,6 +30,7 @@ var handleTeam = function handleTeam(e) {
   return false;
 };
 
+//Handles form for creating units
 var DomoForm = function DomoForm(props) {
 
   return React.createElement(
@@ -54,9 +56,17 @@ var DomoForm = function DomoForm(props) {
         "Abel"
       )
     ),
-    React.createElement("label", { htmlFor: "name" }),
+    React.createElement(
+      "label",
+      { htmlFor: "name" },
+      " Level: "
+    ),
     React.createElement("input", { id: "domoLevel", type: "number", name: "level", placeholder: "Level" }),
-    React.createElement("label", { htmlFor: "weapon" }),
+    React.createElement(
+      "label",
+      { htmlFor: "weapon" },
+      " Weapon: "
+    ),
     React.createElement("input", { id: "domoWeapon", type: "text", name: "weapon", placeholder: "Weapon" }),
     React.createElement(
       "label",
@@ -147,8 +157,10 @@ var DomoForm = function DomoForm(props) {
   );
 };
 
+//displays list of units
 var DomoList = function DomoList(props) {
-
+  console.dir("inside DomoList");
+  //if there is no units made
   if (props.domos.length === 0) {
     return React.createElement(
       "div",
@@ -225,7 +237,12 @@ var DomoList = function DomoList(props) {
         "Seal: ",
         domo.seal
       ),
-      React.createElement("input", { "data-key": domo._id, className: "domoDelete", type: "button", value: "Delete" })
+      React.createElement(
+        "div",
+        { id: "note" },
+        React.createElement("textarea", { rows: "5", cols: "20" })
+      ),
+      React.createElement("input", { "data-key": domo._id, className: "domoDelete", type: "button", value: "Delete Unit" })
     );
   });
 
@@ -241,14 +258,15 @@ var DomoList = function DomoList(props) {
   );
 };
 
+//loads units from server
 var loadDomosFromServer = function loadDomosFromServer() {
   sendAjax('GET', '/getDomos', null, function (data) {
     ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#list"));
   });
 };
 
+//form for creating teams
 var teamForm = function teamForm(props) {
-
   var teamNodes = props.domo.map(function (domo) {
     return React.createElement(
       "option",
@@ -310,6 +328,7 @@ var teamForm = function teamForm(props) {
   );
 };
 
+//displays teams
 var teamList = function teamList(props) {
   if (props.teams.length === 0) {
     return React.createElement(
@@ -351,15 +370,19 @@ var teamList = function teamList(props) {
   });
 };
 
+//self-explanatory
 var loadTeamsFromServer = function loadTeamsFromServer() {
   sendAjax('GET', '/getTeams', null, function (data) {
     ReactDOM.render(React.createElement(DomoList, { domos: data.teams }), document.querySelector("#list"));
   });
 };
 
+//initial page setup
 var setup = function setup(csrf) {
+  console.dir("team");
 
   var teamButton = document.querySelector("#teamButton");
+  var unitButton = document.querySelector("#unitButton");
 
   ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#maker"));
 
@@ -368,10 +391,16 @@ var setup = function setup(csrf) {
 
   teamButton.addEventListener("click", function (e) {
     e.preventDefault();
+    console.dir("team");
     createTeamBuilder(csrf);
     return false;
   });
 
+  unitButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createUnitMaker(csrf);
+    return false;
+  });
   /*
     loginButton.addEventListener("click", (e) =>{
     e.preventDefault();
@@ -381,6 +410,7 @@ var setup = function setup(csrf) {
   */
 };
 
+//loads unit view
 var createUnitMaker = function createUnitMaker(csrf) {
   ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#maker"));
 
@@ -388,19 +418,14 @@ var createUnitMaker = function createUnitMaker(csrf) {
   loadDomosFromServer();
 };
 
+//loads team view
 var createTeamBuilder = function createTeamBuilder(csrf) {
-  var unitButton = document.querySelector("#unitButton");
-  ReactDOM.render(React.createElement("teamForm", { csrf: csrf }), document.querySelector("#maker"));
-  ReactDOM.render(React.createElement("teamList", { csrf: csrf }), document.querySelector("#list"));
-  loadTeamsFromServer();
-
-  unitButton.addEventListener("click", function (e) {
-    e.preventDefault();
-    createUnitMaker(csrf);
-    return false;
-  });
+  ReactDOM.render(React.createElement("teamFjorm", { csrf: csrf }), document.querySelector("#maker"));
+  ReactDOM.render(React.createElement("teamList", { teams: [] }), document.querySelector("#list"));
+  //loadTeamsFromServer();
 };
 
+//getting user token
 var getToken = function getToken() {
   sendAjax('GET', '/getToken', null, function (result) {
     setup(result.csrfToken);

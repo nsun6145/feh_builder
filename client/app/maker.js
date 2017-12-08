@@ -1,4 +1,3 @@
-
 //The two below handle requests for respectives
 const handleDomo = (e) => {
   e.preventDefault();
@@ -82,7 +81,7 @@ const DomoForm = (props) => {
 
 //displays list of units
 const DomoList = function(props){
-  
+  console.dir("inside DomoList");
   //if there is no units made
   if(props.domos.length === 0){
     return(
@@ -103,6 +102,7 @@ const DomoList = function(props){
       <img src="/assets/img/stone_icon.png" alt="domo face" className="domoFace" />
         <h3 className="domoName"> Name: {domo.name}</h3>
         <h3 className="domoLevel"> Level: {domo.level}</h3>
+
         <h3 className="domoWeapon"> Weapon: {domo.weapon}</h3>
         <h3 className = "unitAssist">Assist: {domo.assist}</h3>
         <h3 className = "unitSpecial">Special: {domo.special}</h3>
@@ -110,8 +110,10 @@ const DomoList = function(props){
         <h3 className = "unitSkillB">B Skill: {domo.skillB}</h3>
         <h3 className = "unitSkillC">C Skill: {domo.skillC}</h3>
         <h3 className = "unitSeal">Seal: {domo.seal}</h3>
-        
-        <input data-key={domo._id} className="domoDelete" type="button" value="Delete"/>
+        <div id = "note">
+        <textarea rows="5" cols= "20"></textarea>
+        </div>
+        <input data-key={domo._id} className="domoDelete" type="button" value="Delete Unit"/>
     </div>
     );
   });
@@ -138,7 +140,6 @@ const loadDomosFromServer = () => {
 
 //form for creating teams
 const teamForm = (props) => {
-  
    const teamNodes = props.domo.map(function(domo){
     return(
       <option value={domo.name} >{domo.name}</option>
@@ -216,8 +217,10 @@ const loadTeamsFromServer = () =>{
 
 //initial page setup
 const setup = function(csrf){
+  console.dir("team");
   
   const teamButton = document.querySelector("#teamButton");
+  const unitButton = document.querySelector("#unitButton");
   
   
   ReactDOM.render(
@@ -231,10 +234,16 @@ const setup = function(csrf){
   
   teamButton.addEventListener("click", (e) =>{
     e.preventDefault();
+    console.dir("team");
     createTeamBuilder(csrf);
     return false;
   });
   
+  unitButton.addEventListener("click", (e) =>{
+    e.preventDefault();
+    createUnitMaker(csrf);
+    return false;
+  });
   /*
     loginButton.addEventListener("click", (e) =>{
     e.preventDefault();
@@ -242,6 +251,7 @@ const setup = function(csrf){
     return false;
   });
   */
+  
 };
 
 //loads unit view
@@ -254,25 +264,18 @@ const createUnitMaker = function(csrf){
     <DomoList domos={[]} />, document.querySelector("#list")
   );
   loadDomosFromServer();
+  
 }
 
 //loads team view
 const createTeamBuilder = function(csrf){
-  const unitButton = document.querySelector("#unitButton");
   ReactDOM.render(
   <teamForm csrf={csrf}/>, document.querySelector("#maker")
   );
   ReactDOM.render(
-  <teamList csrf={csrf}/>, document.querySelector("#list")
+  <teamList teams={[]}/>, document.querySelector("#list")
   );
-  loadTeamsFromServer();
-  
-    unitButton.addEventListener("click", (e) =>{
-    e.preventDefault();
-    createUnitMaker(csrf);
-    return false;
-  });
-  
+  //loadTeamsFromServer();
 };
 
 //getting user token

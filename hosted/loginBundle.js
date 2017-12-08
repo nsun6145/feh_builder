@@ -1,5 +1,6 @@
 "use strict";
 
+//The two below handle login and signup respectively 
 var handleLogin = function handleLogin(e) {
   e.preventDefault();
 
@@ -37,6 +38,7 @@ var handleSignup = function handleSignup(e) {
   return false;
 };
 
+//login view
 var LoginWindow = function LoginWindow(props) {
   return React.createElement(
     "form",
@@ -62,6 +64,8 @@ var LoginWindow = function LoginWindow(props) {
     React.createElement("input", { className: "formSubmit", type: "submit", value: "Sign in" })
   );
 };
+
+//sign-up view
 var SignupWindow = function SignupWindow(props) {
   return React.createElement(
     "form",
@@ -95,6 +99,7 @@ var SignupWindow = function SignupWindow(props) {
   );
 };
 
+//the two below create the above two views
 var createLoginWindow = function createLoginWindow(csrf) {
   ReactDOM.render(React.createElement(LoginWindow, { csrf: csrf }), document.querySelector("#content"));
 };
@@ -103,6 +108,7 @@ var createSignupWindow = function createSignupWindow(csrf) {
   ReactDOM.render(React.createElement(SignupWindow, { csrf: csrf }), document.querySelector("#content"));
 };
 
+//inital page setup
 var setup = function setup(csrf) {
   var loginButton = document.querySelector("#loginButton");
   var signupButton = document.querySelector("#signupButton");
@@ -122,6 +128,7 @@ var setup = function setup(csrf) {
   createLoginWindow(csrf);
 };
 
+//user token
 var getToken = function getToken() {
   sendAjax('GET', '/getToken', null, function (result) {
     setup(result.csrfToken);
