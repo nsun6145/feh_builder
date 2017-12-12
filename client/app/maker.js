@@ -179,7 +179,7 @@ const TeamForm = (props) => {
   let teamNodes;
   
   try{
-   teamNodes = props.domo.map(function(domo){
+   teamNodes = props.domos.map(function(domo){
     return(
       <option value={domo.name} >{domo.name}</option>
     );
@@ -189,8 +189,9 @@ const TeamForm = (props) => {
   catch(err){
     console.dir("No units made yet.");
     teamNodes = ["No Units"];
+    console.dir("The error is " + err);
   }
-
+console.dir(teamNodes);
   return (
     <form id="teamForm"
      onSubmit={handleDomo}

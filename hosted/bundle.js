@@ -324,7 +324,7 @@ var TeamForm = function TeamForm(props) {
   var teamNodes = void 0;
 
   try {
-    teamNodes = props.domo.map(function (domo) {
+    teamNodes = props.domos.map(function (domo) {
       return React.createElement(
         "option",
         { value: domo.name },
@@ -334,8 +334,9 @@ var TeamForm = function TeamForm(props) {
   } catch (err) {
     console.dir("No units made yet.");
     teamNodes = ["No Units"];
+    console.dir("The error is " + err);
   }
-
+  console.dir(teamNodes);
   return React.createElement(
     "form",
     { id: "teamForm",
