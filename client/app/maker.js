@@ -42,7 +42,7 @@ const DomoForm = (props) => {
       className="domoForm"
      >
       <ul>
-        <li>
+      <li>
       <label htmlFor="name">Name: </label>
       <select id="domoName" name="name" placeholder="Name">
       <option value="Abel">Abel</option>
@@ -112,7 +112,7 @@ const DomoForm = (props) => {
 
 //displays list of units
 const DomoList = function(props){
-  console.dir("inside DomoList");
+
   //if there is no units made
   if(props.domos.length === 0){
     return(
@@ -147,6 +147,7 @@ const DomoList = function(props){
         <textarea rows="5" cols= "20"></textarea>
         </div>
         <input data-key={domo._id} className="noteAdd" type="button" value="Add/Replace Note"/>
+        
         <input data-key={domo._id} className="domoDelete" type="button" value="Delete Unit"/>
        </div>
     );
@@ -173,14 +174,23 @@ const loadDomosFromServer = () => {
 };
 
 //form for creating teams
-const teamForm = (props) => {
-   const teamNodes = props.domo.map(function(domo){
+const TeamForm = (props) => {
+
+  let teamNodes;
+  
+  try{
+   teamNodes = props.domo.map(function(domo){
     return(
       <option value={domo.name} >{domo.name}</option>
     );
   });
+}
   
-  
+  catch(err){
+    console.dir("No units made yet.");
+    teamNodes = ["No Units"];
+  }
+
   return (
     <form id="teamForm"
      onSubmit={handleDomo}
@@ -189,35 +199,42 @@ const teamForm = (props) => {
       method="POST"
       className="teamForm"
      >
-            
+      <ul> 
+        <li>
       <label htmlFor="name">Unit: </label>
-      <select id="unitName1" name="name" placeholder="Name">
+      <select id="unitName" name="name1" placeholder="Name">
       {teamNodes}
       </select>
-      
+        </li>
+        <li>
       <label htmlFor="name">Unit: </label>
-      <select id="unitName2" name="name" placeholder="Name">
+      <select id="unitName" name="name2" placeholder="Name">
       {teamNodes}
       </select>
-      
+        </li>
+        
+        <li>
       <label htmlFor="name">Unit: </label>
-      <select id="unitName3" name="name" placeholder="Name">
+      <select id="unitName" name="name3" placeholder="Name">
       {teamNodes}
       </select>
-      
+        </li>
+        <li>
       <label htmlFor="name">Unit: </label>
-      <select id="unitName4" name="name" placeholder="Name">
+      <select id="unitName" name="name4" placeholder="Name">
       {teamNodes}
       </select>
-      
+        </li>
       <input id= "teamAdd" type="submit"></input>
+      </ul>
     </form>
+      
     );
   
 };
 
 //displays teams
-const teamList = function(props){
+const TeamList = function(props){
   if(props.teams.length === 0){
     return(
       <div className= "teamList">
@@ -251,7 +268,6 @@ const loadTeamsFromServer = () =>{
 
 //initial page setup
 const setup = function(csrf){
-  console.dir("team");
   
   const teamButton = document.querySelector("#teamButton");
   const unitButton = document.querySelector("#unitButton");
@@ -268,7 +284,6 @@ const setup = function(csrf){
   
   teamButton.addEventListener("click", (e) =>{
     e.preventDefault();
-    console.dir("team");
     createTeamBuilder(csrf);
     return false;
   });
@@ -304,10 +319,10 @@ const createUnitMaker = function(csrf){
 //loads team view
 const createTeamBuilder = function(csrf){
   ReactDOM.render(
-  <teamForm csrf={csrf}/>, document.querySelector("#maker")
+  <TeamForm csrf={csrf}/>, document.querySelector("#maker")
   );
   ReactDOM.render(
-  <teamList teams={[]}/>, document.querySelector("#list")
+  <TeamList teams={[]}/>, document.querySelector("#list")
   );
   //loadTeamsFromServer();
 };

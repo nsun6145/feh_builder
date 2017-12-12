@@ -319,14 +319,22 @@ var loadDomosFromServer = function loadDomosFromServer() {
 };
 
 //form for creating teams
-var teamForm = function teamForm(props) {
-  var teamNodes = props.domo.map(function (domo) {
-    return React.createElement(
-      "option",
-      { value: domo.name },
-      domo.name
-    );
-  });
+var TeamForm = function TeamForm(props) {
+
+  var teamNodes = void 0;
+
+  try {
+    teamNodes = props.domo.map(function (domo) {
+      return React.createElement(
+        "option",
+        { value: domo.name },
+        domo.name
+      );
+    });
+  } catch (err) {
+    console.dir("No units made yet.");
+    teamNodes = ["No Units"];
+  }
 
   return React.createElement(
     "form",
@@ -338,51 +346,71 @@ var teamForm = function teamForm(props) {
       className: "teamForm"
     },
     React.createElement(
-      "label",
-      { htmlFor: "name" },
-      "Unit: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitName1", name: "name", placeholder: "Name" },
-      teamNodes
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "name" },
-      "Unit: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitName2", name: "name", placeholder: "Name" },
-      teamNodes
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "name" },
-      "Unit: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitName3", name: "name", placeholder: "Name" },
-      teamNodes
-    ),
-    React.createElement(
-      "label",
-      { htmlFor: "name" },
-      "Unit: "
-    ),
-    React.createElement(
-      "select",
-      { id: "unitName4", name: "name", placeholder: "Name" },
-      teamNodes
-    ),
-    React.createElement("input", { id: "teamAdd", type: "submit" })
+      "ul",
+      null,
+      React.createElement(
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          "Unit: "
+        ),
+        React.createElement(
+          "select",
+          { id: "unitName", name: "name1", placeholder: "Name" },
+          teamNodes
+        )
+      ),
+      React.createElement(
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          "Unit: "
+        ),
+        React.createElement(
+          "select",
+          { id: "unitName", name: "name2", placeholder: "Name" },
+          teamNodes
+        )
+      ),
+      React.createElement(
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          "Unit: "
+        ),
+        React.createElement(
+          "select",
+          { id: "unitName", name: "name3", placeholder: "Name" },
+          teamNodes
+        )
+      ),
+      React.createElement(
+        "li",
+        null,
+        React.createElement(
+          "label",
+          { htmlFor: "name" },
+          "Unit: "
+        ),
+        React.createElement(
+          "select",
+          { id: "unitName", name: "name4", placeholder: "Name" },
+          teamNodes
+        )
+      ),
+      React.createElement("input", { id: "teamAdd", type: "submit" })
+    )
   );
 };
 
 //displays teams
-var teamList = function teamList(props) {
+var TeamList = function TeamList(props) {
   if (props.teams.length === 0) {
     return React.createElement(
       "div",
@@ -473,8 +501,8 @@ var createUnitMaker = function createUnitMaker(csrf) {
 
 //loads team view
 var createTeamBuilder = function createTeamBuilder(csrf) {
-  ReactDOM.render(React.createElement("teamForm", { csrf: csrf }), document.querySelector("#maker"));
-  ReactDOM.render(React.createElement("teamList", { teams: [] }), document.querySelector("#list"));
+  ReactDOM.render(React.createElement(TeamForm, { csrf: csrf }), document.querySelector("#maker"));
+  ReactDOM.render(React.createElement(TeamList, { teams: [] }), document.querySelector("#list"));
   //loadTeamsFromServer();
 };
 
