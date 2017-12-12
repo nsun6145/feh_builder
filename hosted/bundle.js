@@ -205,7 +205,7 @@ var DomoForm = function DomoForm(props) {
 
 //displays list of units
 var DomoList = function DomoList(props) {
-  console.dir("inside DomoList");
+
   //if there is no units made
   if (props.domos.length === 0) {
     return React.createElement(
@@ -460,7 +460,6 @@ var loadTeamsFromServer = function loadTeamsFromServer() {
 
 //initial page setup
 var setup = function setup(csrf) {
-  console.dir("team");
 
   var teamButton = document.querySelector("#teamButton");
   var unitButton = document.querySelector("#unitButton");
@@ -472,7 +471,6 @@ var setup = function setup(csrf) {
 
   teamButton.addEventListener("click", function (e) {
     e.preventDefault();
-    console.dir("team");
     createTeamBuilder(csrf);
     return false;
   });
