@@ -128,12 +128,15 @@ const DomoList = function(props){
     domoText += `Name: ${domo.name} Level: ${domo.level} Weapon: ${domo.weapon} Assist: ${domo.assist} Special: ${domo.special} A Skill: ${domo.skillA} B Skill : ${domo.skillB} C Skill: ${domo.skillC}  Seal: ${domo.seal}  \n`;
     //const id = e.target.attribute("data-key");
     //const remove = db.collection.remove(id,true);
+    
+    //btw, unitP = unitParameters
     return(
     <div data-key={domo._id} className="domo">
       <img src="/assets/img/stone_icon.png" alt="domo face" className="domoFace" />
         <h3 className="domoName"> Name: {domo.name}</h3>
         
         <h3 className="domoLevel"> Level: {domo.level}</h3>
+        
         
         <h3 className="unitP"> Weapon: {domo.weapon}</h3>
         <h3 className = "unitP">Assist: {domo.assist}</h3>
@@ -177,13 +180,25 @@ const loadDomosFromServer = () => {
 const TeamForm = (props) => {
 
   let teamNodes;
+  let units;
   
   try{
-   teamNodes = props.domos.map(function(domo){
+  
+    sendAjax('GET', '/getDomos', null, (data) =>{
+      props.domos = data.domos;
+      units = props.domos;
+      console.dir("Got the units");
+      console.dir (data.domos); //Both of these print the populated arrays
+      console.dir(units);
+    });
+  
+   
+   teamNodes = units.map(function(domo){
     return(
       <option value={domo.name} >{domo.name}</option>
-    );
-  });
+      );
+    });
+
 }
   
   catch(err){
@@ -191,7 +206,7 @@ const TeamForm = (props) => {
     teamNodes = ["No Units"];
     console.dir("The error is " + err);
   }
-console.dir(teamNodes);
+  console.dir(teamNodes);
   return (
     <form id="teamForm"
      onSubmit={handleDomo}
@@ -320,7 +335,7 @@ const createUnitMaker = function(csrf){
 //loads team view
 const createTeamBuilder = function(csrf){
   ReactDOM.render(
-  <TeamForm csrf={csrf}/>, document.querySelector("#maker")
+  <TeamForm csrf={csrf} domos={[]} />, document.querySelector("#maker")
   );
   ReactDOM.render(
   <TeamList teams={[]}/>, document.querySelector("#list")

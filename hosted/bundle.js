@@ -225,6 +225,8 @@ var DomoList = function DomoList(props) {
     domoText += "Name: " + domo.name + " Level: " + domo.level + " Weapon: " + domo.weapon + " Assist: " + domo.assist + " Special: " + domo.special + " A Skill: " + domo.skillA + " B Skill : " + domo.skillB + " C Skill: " + domo.skillC + "  Seal: " + domo.seal + "  \n";
     //const id = e.target.attribute("data-key");
     //const remove = db.collection.remove(id,true);
+
+    //btw, unitP = unitParameters
     return React.createElement(
       "div",
       { "data-key": domo._id, className: "domo" },
@@ -322,9 +324,19 @@ var loadDomosFromServer = function loadDomosFromServer() {
 var TeamForm = function TeamForm(props) {
 
   var teamNodes = void 0;
+  var units = void 0;
 
   try {
-    teamNodes = props.domos.map(function (domo) {
+
+    sendAjax('GET', '/getDomos', null, function (data) {
+      props.domos = data.domos;
+      units = props.domos;
+      console.dir("Got the units");
+      console.dir(data.domos);
+      console.dir(units);
+    });
+
+    teamNodes = units.map(function (domo) {
       return React.createElement(
         "option",
         { value: domo.name },
@@ -500,7 +512,7 @@ var createUnitMaker = function createUnitMaker(csrf) {
 
 //loads team view
 var createTeamBuilder = function createTeamBuilder(csrf) {
-  ReactDOM.render(React.createElement(TeamForm, { csrf: csrf }), document.querySelector("#maker"));
+  ReactDOM.render(React.createElement(TeamForm, { csrf: csrf, domos: [] }), document.querySelector("#maker"));
   ReactDOM.render(React.createElement(TeamList, { teams: [] }), document.querySelector("#list"));
   //loadTeamsFromServer();
 };
