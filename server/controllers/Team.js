@@ -16,10 +16,11 @@ const teamPage = (req, res) => {
 
 // handles building of team
 const buildTeam = (req, res) => {
+
   if (!req.body.unit1 && !req.body.unit2 && !req.body.unit3 && !req.body.unit4) {
     return res.status(400).json({ error: 'Ya need at least one unit.' });
   }
-
+  
   const teamData = {
     unit1: req.body.unit1,
     unit2: req.body.unit2,
@@ -28,8 +29,9 @@ const buildTeam = (req, res) => {
 
     owner: req.session.account._id,
   };
-
+  
   const newTeam = new Team.TeamModel(teamData);
+  //saves team data (newTeam) to mongo(teamPromise). Returns it at the end.
   const teamPromise = newTeam.save();
 
   teamPromise.then(() => res.json({ redirect: '/teamMaker' }));
@@ -40,20 +42,23 @@ const buildTeam = (req, res) => {
       return res.stats(400).json({ error: 'Team already exists' });
     }
 
-    return res.status(400).json({ error: 'An error occurred' });
+    return res.status(400).json({ error: 'An error p occurred' });
   });
-  return teamPromise;
+    return teamPromise;
 };
 
 // fetches the teams
-const getTeams = (req, res) => Team.TeamModel.findByOwner(req.session.account._id, (err, docs) => {
-  if (err) {
-    console.log(err);
-    return res.status(400).json({ error: 'An error occurred' });
-  }
-
-  return res.json({ teams: docs });
-});
+const getTeams = (req, res) => {
+  return Team.TeamModel.findByOwner(req.session.account._id, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+    console.dir("getting");
+    //console.dir(teams);
+    return res.json({ teams: docs });
+  });
+};
 
 
 module.exports.teamPage = teamPage;

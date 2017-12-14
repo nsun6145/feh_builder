@@ -134,9 +134,7 @@ const DomoList = function(props){
     <div data-key={domo._id} className="domo">
       <img src="/assets/img/stone_icon.png" alt="domo face" className="domoFace" />
         <h3 className="domoName"> Name: {domo.name}</h3>
-        
         <h3 className="domoLevel"> Level: {domo.level}</h3>
-        
         
         <h3 className="unitP"> Weapon: {domo.weapon}</h3>
         <h3 className = "unitP">Assist: {domo.assist}</h3>
@@ -179,37 +177,17 @@ const loadDomosFromServer = () => {
 //form for creating teams
 const TeamForm = (props) => {
 
-  let teamNodes;
-  let units;
-  
-  try{
-  
-    sendAjax('GET', '/getDomos', null, (data) =>{
-      props.domos = data.domos;
-      units = props.domos;
-      console.dir("Got the units");
-      console.dir (data.domos); //Both of these print the populated arrays
-      console.dir(units);
-    });
-  
+  let unitNodes;
    
-   teamNodes = units.map(function(domo){
+  unitNodes = props.domos.map(function(domo){
     return(
       <option value={domo.name} >{domo.name}</option>
       );
     });
 
-}
-  
-  catch(err){
-    console.dir("No units made yet.");
-    teamNodes = ["No Units"];
-    console.dir("The error is " + err);
-  }
-  console.dir(teamNodes);
   return (
     <form id="teamForm"
-     onSubmit={handleDomo}
+     onSubmit={handleTeam}
       name="teamForm"
       action="/teamMaker"
       method="POST"
@@ -218,30 +196,35 @@ const TeamForm = (props) => {
       <ul> 
         <li>
       <label htmlFor="name">Unit: </label>
-      <select id="unitName" name="name1" placeholder="Name">
-      {teamNodes}
+      <select id="unitName" name="unit1" placeholder="Name">
+      <option value= "" >None</option>
+      {unitNodes}
       </select>
         </li>
         <li>
       <label htmlFor="name">Unit: </label>
-      <select id="unitName" name="name2" placeholder="Name">
-      {teamNodes}
+      <select id="unitName" name="unit2" placeholder="Name">
+      <option value= "" >None</option>
+      {unitNodes}
       </select>
         </li>
         
         <li>
       <label htmlFor="name">Unit: </label>
-      <select id="unitName" name="name3" placeholder="Name">
-      {teamNodes}
+      <select id="unitName" name="unit3" placeholder="Name">
+      <option value= "" >None</option>
+      {unitNodes}
       </select>
         </li>
         <li>
       <label htmlFor="name">Unit: </label>
-      <select id="unitName" name="name4" placeholder="Name">
-      {teamNodes}
+      <select id="unitName" name="unit4" placeholder="Name">
+      <option value= "" >None</option>
+      {unitNodes}
       </select>
         </li>
-      <input id= "teamAdd" type="submit"></input>
+      <input type="hidden" name="_csrf" value={props.csrf}/>
+      <input id= "teamAdd" type="submit" value = "Create Team"></input>
       </ul>
     </form>
       
@@ -251,6 +234,7 @@ const TeamForm = (props) => {
 
 //displays teams
 const TeamList = function(props){
+  console.dir(props.teams);
   if(props.teams.length === 0){
     return(
       <div className= "teamList">
@@ -262,23 +246,30 @@ const TeamList = function(props){
   const id = e.target.attribute("data-key");
   return(
     <div data-key={team._id} className="team">
-    <h3 className = "unit">{team.unit1}</h3>
-    <h3 className = "unit">{team.unit2}</h3>
-    <h3 className = "unit">{team.unit3}</h3>
-    <h3 className = "unit">{team.unit4}</h3>
+    <h3 className="unit">{team.unit1}</h3>
+    <h3 className="unit">{team.unit2}</h3>
+    <h3 className="unit">{team.unit3}</h3>
+    <h3 className="unit">{team.unit4}</h3>
     </div>
   );
      
   });
-  
+  return(
+  <div className="teamList">
+  <h3>dfdkfhjadlfjd;lasfj;lj</h3>
+  {teamNodes}
+  </div>
+  );
 };
 
 //self-explanatory
 const loadTeamsFromServer = () =>{
   sendAjax('GET', '/getTeams', null, (data) =>{
+    console.dir("got teams");
    ReactDOM.render(
-     <DomoList domos={data.teams} />, document.querySelector("#list")
-   ); 
+     <TeamList teams={data.teams} />, document.querySelector("#list")
+    ); 
+    
   });
 };
 
@@ -309,6 +300,7 @@ const setup = function(csrf){
     createUnitMaker(csrf);
     return false;
   });
+  
   /*
     loginButton.addEventListener("click", (e) =>{
     e.preventDefault();
@@ -334,13 +326,15 @@ const createUnitMaker = function(csrf){
 
 //loads team view
 const createTeamBuilder = function(csrf){
-  ReactDOM.render(
-  <TeamForm csrf={csrf} domos={[]} />, document.querySelector("#maker")
-  );
+  sendAjax('GET', '/getDomos', null, (data) =>{
+      ReactDOM.render(
+    <TeamForm csrf={csrf} domos={data.domos} />, document.querySelector("#maker")
+    );
+    });
   ReactDOM.render(
   <TeamList teams={[]}/>, document.querySelector("#list")
   );
-  //loadTeamsFromServer();
+  loadTeamsFromServer();
 };
 
 //getting user token

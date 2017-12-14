@@ -323,36 +323,20 @@ var loadDomosFromServer = function loadDomosFromServer() {
 //form for creating teams
 var TeamForm = function TeamForm(props) {
 
-  var teamNodes = void 0;
-  var units = void 0;
+  var unitNodes = void 0;
 
-  try {
+  unitNodes = props.domos.map(function (domo) {
+    return React.createElement(
+      "option",
+      { value: domo.name },
+      domo.name
+    );
+  });
 
-    sendAjax('GET', '/getDomos', null, function (data) {
-      props.domos = data.domos;
-      units = props.domos;
-      console.dir("Got the units");
-      console.dir(data.domos);
-      console.dir(units);
-    });
-
-    teamNodes = units.map(function (domo) {
-      return React.createElement(
-        "option",
-        { value: domo.name },
-        domo.name
-      );
-    });
-  } catch (err) {
-    console.dir("No units made yet.");
-    teamNodes = ["No Units"];
-    console.dir("The error is " + err);
-  }
-  console.dir(teamNodes);
   return React.createElement(
     "form",
     { id: "teamForm",
-      onSubmit: handleDomo,
+      onSubmit: handleTeam,
       name: "teamForm",
       action: "/teamMaker",
       method: "POST",
@@ -371,8 +355,13 @@ var TeamForm = function TeamForm(props) {
         ),
         React.createElement(
           "select",
-          { id: "unitName", name: "name1", placeholder: "Name" },
-          teamNodes
+          { id: "unitName", name: "unit1", placeholder: "Name" },
+          React.createElement(
+            "option",
+            { value: "" },
+            "None"
+          ),
+          unitNodes
         )
       ),
       React.createElement(
@@ -385,8 +374,13 @@ var TeamForm = function TeamForm(props) {
         ),
         React.createElement(
           "select",
-          { id: "unitName", name: "name2", placeholder: "Name" },
-          teamNodes
+          { id: "unitName", name: "unit2", placeholder: "Name" },
+          React.createElement(
+            "option",
+            { value: "" },
+            "None"
+          ),
+          unitNodes
         )
       ),
       React.createElement(
@@ -399,8 +393,13 @@ var TeamForm = function TeamForm(props) {
         ),
         React.createElement(
           "select",
-          { id: "unitName", name: "name3", placeholder: "Name" },
-          teamNodes
+          { id: "unitName", name: "unit3", placeholder: "Name" },
+          React.createElement(
+            "option",
+            { value: "" },
+            "None"
+          ),
+          unitNodes
         )
       ),
       React.createElement(
@@ -413,17 +412,24 @@ var TeamForm = function TeamForm(props) {
         ),
         React.createElement(
           "select",
-          { id: "unitName", name: "name4", placeholder: "Name" },
-          teamNodes
+          { id: "unitName", name: "unit4", placeholder: "Name" },
+          React.createElement(
+            "option",
+            { value: "" },
+            "None"
+          ),
+          unitNodes
         )
       ),
-      React.createElement("input", { id: "teamAdd", type: "submit" })
+      React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+      React.createElement("input", { id: "teamAdd", type: "submit", value: "Create Team" })
     )
   );
 };
 
 //displays teams
 var TeamList = function TeamList(props) {
+  console.dir(props.teams);
   if (props.teams.length === 0) {
     return React.createElement(
       "div",
@@ -462,12 +468,23 @@ var TeamList = function TeamList(props) {
       )
     );
   });
+  return React.createElement(
+    "div",
+    { className: "teamList" },
+    React.createElement(
+      "h3",
+      null,
+      "dfdkfhjadlfjd;lasfj;lj"
+    ),
+    teamNodes
+  );
 };
 
 //self-explanatory
 var loadTeamsFromServer = function loadTeamsFromServer() {
   sendAjax('GET', '/getTeams', null, function (data) {
-    ReactDOM.render(React.createElement(DomoList, { domos: data.teams }), document.querySelector("#list"));
+    console.dir("got teams");
+    ReactDOM.render(React.createElement(TeamList, { teams: data.teams }), document.querySelector("#list"));
   });
 };
 
@@ -493,6 +510,7 @@ var setup = function setup(csrf) {
     createUnitMaker(csrf);
     return false;
   });
+
   /*
     loginButton.addEventListener("click", (e) =>{
     e.preventDefault();
@@ -512,9 +530,11 @@ var createUnitMaker = function createUnitMaker(csrf) {
 
 //loads team view
 var createTeamBuilder = function createTeamBuilder(csrf) {
-  ReactDOM.render(React.createElement(TeamForm, { csrf: csrf, domos: [] }), document.querySelector("#maker"));
+  sendAjax('GET', '/getDomos', null, function (data) {
+    ReactDOM.render(React.createElement(TeamForm, { csrf: csrf, domos: data.domos }), document.querySelector("#maker"));
+  });
   ReactDOM.render(React.createElement(TeamList, { teams: [] }), document.querySelector("#list"));
-  //loadTeamsFromServer();
+  loadTeamsFromServer();
 };
 
 //getting user token

@@ -25,7 +25,6 @@ const makerPage = (req, res) => {
       console.log(err);
       return res.status(400).json({ error: 'Whoops. Somethin\' happend.' });
     }
-
     return res.render('app', { csrfToken: req.csrfToken(), domos: docs });
   });
 };
